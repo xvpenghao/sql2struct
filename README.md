@@ -14,7 +14,7 @@
 下载 sql2工具
 
 ```
-go get -u github.com/xvpneghao/sql2struct/cmd/sql2s
+go install github.com/xvpenghao/sql2struct/cmd/sql2s 
 ```
 
 写配置文件
