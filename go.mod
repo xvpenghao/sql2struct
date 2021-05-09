@@ -1,4 +1,4 @@
-module sql2struct
+module github.com/xvpenghao/sql2struct
 
 go 1.16
 

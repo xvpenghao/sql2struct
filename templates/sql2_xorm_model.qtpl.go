@@ -6,7 +6,7 @@ package templates
 
 //line templates/sql2_xorm_model.qtpl:1
 import (
-	"sql2struct/model"
+	"github.com/xvpenghao/sql2struct/model"
 	"strings"
 )
 

@@ -1,5 +1,5 @@
 {% import (
-	"sql2struct/model"
+	"github.com/xvpenghao/sql2struct/model"
     "strings"
 )%}
 
