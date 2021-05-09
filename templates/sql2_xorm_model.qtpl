@@ -1,0 +1,64 @@
+{% import (
+	"sql2struct/model"
+    "strings"
+)%}
+
+// 结构体的生成
+{% func GenerateModelFile(sql *model.CreateTableSql,structName,pkg string) %}
+package {%s pkg%}
+
+import (
+    "time"
+)
+
+type {%s structName %} struct {
+{% stripspace%}
+    {% for _, c := range sql.ColumnList %}
+        {% code
+            name := strings.Title(c.Name)
+           nameLower := strings.ToLower(c.Name)
+        %}
+
+        {%s name %} {% space %}
+        {%s c.DataType %} {% space %}
+        `zh:"{%s c.Comment %}" json:"{%s c.Name %}" form:"{%s c.Name %}"
+        {% if nameLower == "id"%}
+            {% space %}xorm:"'id' bigint pk autoincr"
+        {% endif%}`
+        {% newline %}
+    {% endfor %}
+{% endstripspace %}
+}
+
+    {%= generateTableNameMethod(sql.TableName,structName)%}
+    {%= generateBeforeInsertMethod(structName)%}
+    {%= generateBeforeUpdateMethod(structName)%}
+{% endfunc %}
+
+
+// TableName
+{% func generateTableNameMethod(tableName ,structName string)%}
+    func (this *{%s structName%}) TableName() string {
+        return "{%s tableName%}"
+    }
+{% endfunc%}
+
+
+// BeforeInsert
+{% func generateBeforeInsertMethod(structName string)%}
+    func (this *{%s structName%}) BeforeInsert() {
+        if this.CreateTime == "" {
+            this.CreateTime = time.Now().Format("2006-01-02 15:04:05")
+        }
+        if this.UpdateTime == "" {
+            this.UpdateTime = time.Now().Format("2006-01-02 15:04:05")
+        }
+    }
+{% endfunc%}
+
+
+{% func generateBeforeUpdateMethod(structName string)%}
+    func (this *{%s structName%}) BeforeUpdate() {
+        this.UpdateTime = time.Now().Format("2006-01-02 15:04:05")
+    }
+{% endfunc%}

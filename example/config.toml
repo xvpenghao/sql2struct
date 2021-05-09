@@ -1,0 +1,5 @@
+dsn="root:123456@tcp(localhost:3306)/db_test?charset=utf8"
+dstFile="example/score.go"
+structName="TotalScore"
+pkgName="mscore"
+tableName="t_score_total"
