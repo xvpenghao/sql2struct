@@ -70,7 +70,7 @@ func g(cfg *Config) {
 		columnList = append(columnList, &model.Column{
 			Name:     snakeCaseToCamel(strings.Trim(row[0], "`")),
 			DataType: sqlType2GoType(getColType(row[1])),
-			Comment:  getComment(row),
+			Comment:  getComment(s),
 		})
 	}
 
@@ -93,12 +93,16 @@ func getColType(colType string) string {
 	return colType
 }
 
-func getComment(row []string) string {
+func getComment(row string) string {
 	// 如果里面没有 comment则直接返回
-	if !strings.Contains(strings.Join(row, ","), "COMMENT") {
+	if !strings.Contains(row, "COMMENT") {
 		return ""
 	}
-	return strings.Trim(row[len(row)-1], "'")
+	res := strings.Split(row, "COMMENT")
+	if len(res) < 1 {
+		return ""
+	}
+	return strings.Trim(strings.TrimSpace(res[1]), "'")
 }
 
 func sqlType2GoType(sqlType string) string {
