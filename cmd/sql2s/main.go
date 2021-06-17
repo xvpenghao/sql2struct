@@ -59,13 +59,17 @@ func g(cfg *Config) {
 	createSql := queryRes[0]["Create Table"]
 	lastIndex := strings.LastIndex(createSql, "',")
 	index := strings.Index(createSql, "(")
-	content := strings.Split(createSql[index+1:lastIndex+1], ",")
+	content := strings.Split(createSql[index+1:lastIndex+1], ",\n")
 	ctsql := &model.CreateTableSql{
 		TableName: cfg.TableName,
 	}
 	var columnList []*model.Column
 	for _, s := range content {
 		s = strings.TrimSpace(s)
+		if s == "" {
+			continue
+		}
+
 		row := strings.Split(s, " ")
 		columnList = append(columnList, &model.Column{
 			Name:     snakeCaseToCamel(strings.Trim(row[0], "`")),
