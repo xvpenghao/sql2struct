@@ -20,7 +20,7 @@ go get -u github.com/xvpenghao/sql2struct
 go install github.com/xvpenghao/sql2struct/cmd/sql2s 
 ```
 
-写配置文件
+方式1 写配置文件
 
 ```toml
 dsn="root:123456@tcp(localhost:3306)/db_test?charset=utf8"
@@ -34,6 +34,17 @@ tableName="t_score_total"
 
 ```shell
 ./sql2s -src=xxxx.toml
+```
+
+方式2 [dsn,tableName,dstFile,pkgName,structName] 执行
+
+```shell
+# [dsn,tableName,dstFile,pkgName,structName] use way 
+./sql2model --dsn 'uname:pwd@tcp(host:3306)/db?charset=utf8' \
+--tableName xxx \
+--dstFile xx.go \
+--pkgName xxxx \
+--structName xxx 
 ```
 
 
