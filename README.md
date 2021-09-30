@@ -14,10 +14,8 @@
 下载 sql2工具
 
 ```
-# 下载依赖
-go get -u github.com/xvpenghao/sql2struct
 # 安装工具
-go install github.com/xvpenghao/sql2struct/cmd/sql2s 
+go install github.com/xvpenghao/sql2struct/cmd/sql2m 
 ```
 
 方式1 写配置文件
@@ -30,17 +28,17 @@ pkgName="mscore"
 tableName="t_score_total"
 ```
 
-运行 sql2并 指定配置文件路径，即可生成 xxx.go文件
+运行 sql2m并 指定配置文件路径，即可生成 xxx.go文件
 
 ```shell
-./sql2s -src=xxxx.toml
+./sql2m -src=xxxx.toml
 ```
 
 方式2 [dsn,tableName,dstFile,pkgName,structName] 执行
 
 ```shell
 # [dsn,tableName,dstFile,pkgName,structName] use way 
-./sql2model --dsn 'uname:pwd@tcp(host:3306)/db?charset=utf8' \
+./sql2m --dsn 'uname:pwd@tcp(host:3306)/db?charset=utf8' \
 --tableName xxx \
 --dstFile xx.go \
 --pkgName xxxx \
