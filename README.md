@@ -15,7 +15,7 @@
 
 ```
 # 安装工具
-go install github.com/xvpenghao/sql2struct/cmd/sql2m 
+go install github.com/xvpenghao/sql2struct/cmd/sql2m@v1.0.9
 ```
 
 方式1 写配置文件
