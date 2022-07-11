@@ -179,6 +179,10 @@ func g(cfg *Config) {
 	b := bytes.NewBufferString(templates.GenerateModelFile(ctsql, cfg.StructName, cfg.PkgName))
 	// 格式化
 	formatRes, _ := format.Source(b.Bytes())
+	dir := cfg.DstFile[:strings.LastIndex(cfg.DstFile, "/")]
+	if _, err := os.Stat(dir); os.IsNotExist(err) { // 目录不存在，则创建目录
+		os.MkdirAll(dir, os.ModePerm)
+	}
 	err = ioutil.WriteFile(cfg.DstFile, formatRes, os.ModePerm)
 	if err != nil {
 		log.Fatal(err)
